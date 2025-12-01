@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Universal browser compatibility checker with Cloudflare Stream video support detection",
   "scripts": {
-    "build": "mkdir -p dist && cp public/index.html dist/index.html"
+    "build": "mkdir -p dist && cp public/index.html dist/index.html",
+    "deploy": "npm run build && wrangler pages deploy dist --project-name=browser-compatibility-checker"
+  },
+  "config": {
+    "cloudflare_account_id": "3bbf4925c46c792040f380c5655788e0"
   }
 }
