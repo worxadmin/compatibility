@@ -1,55 +1,55 @@
 # Browser Compatibility Checker
 
-A Vue 3 application that checks and displays browser compatibility for modern web features.
+A universal browser compatibility checker built with vanilla HTML/CSS/JavaScript. Works on all browsers, even very old ones, to detect modern web feature support.
 
-## Features Checked
+## Features
 
-- WebGL2
+### General Browser Features
+- WebGL 1.0 & 2.0
 - Web Audio API
 - Local Storage
 - Promises
-- CSS Transforms
-- CSS Transitions
-- CSS Animations
-- CSS Grid
-- CSS Variables
+- ES6 Features
+- Fetch API
+- CSS Transforms, Transitions, Animations
+- CSS Grid & Variables
 - Flexbox
 - Service Workers
 
-## Getting Started
+### Cloudflare Stream Video Requirements
+- WebRTC (adaptive streaming)
+- Media Source Extensions (MSE)
+- H.264, HEVC/H.265, VP9, AV1 video codecs
+- Fullscreen API
+- Iframe embedding support
+- Browser isolation detection
 
-### Install Dependencies
+## Deployment
 
-```bash
-npm install
-```
-
-### Run Development Server
-
-```bash
-npm run dev
-```
-
-### Build for Production
+### Build for Cloudflare Pages
 
 ```bash
 npm run build
 ```
 
-### Preview Production Build
+This creates a `dist` folder with the static HTML file.
 
-```bash
-npm run preview
-```
+### Cloudflare Pages Settings
 
-## Customization
+- **Build command**: `npm run build`
+- **Build output directory**: `dist`
+- **Deploy command**: Leave empty (or use `npx wrangler deploy` with wrangler.toml)
 
-### Add Icon Image
+## Local Testing
 
-Place your icon image at `/public/images/Icon material-error-outline.png` or update the image path in `CompatibilityChecker.vue`.
+Simply open `public/index.html` in any browser. No build step or server required for local testing.
 
-## Tech Stack
+## Browser Compatibility
 
-- Vue 3
-- Vite
-- SCSS
+Written in ES5 JavaScript with traditional CSS (no Grid/Flexbox in layout) to ensure it runs on:
+- Internet Explorer 9+
+- All modern browsers
+- Browser isolation environments
+- Very old versions of Chrome, Firefox, Safari
+
+The checker itself will work even on browsers that fail most feature checks!
