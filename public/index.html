@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browser Compatibility Checker</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #f5f5f5;
+      padding: 20px;
+    }
+
+    .compatibility-check {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .icon-placeholder {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      color: #3F8CBA;
+    }
+
+    .icon-placeholder svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    h1 {
+      margin: 0 0 10px 0;
+      font-size: 28px;
+      color: #3F8CBA;
+      font-weight: 600;
+    }
+
+    .description {
+      margin: 10px auto 30px;
+      color: #4D4D4D;
+      max-width: 400px;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .all-checks {
+      margin: 30px auto;
+      max-width: 600px;
+    }
+
+    .all-checks h2 {
+      font-size: 20px;
+      color: #3F8CBA;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .all-checks ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .all-checks li {
+      padding: 12px 20px;
+      margin: 8px 0;
+      border-radius: 8px;
+      font-size: 15px;
+      overflow: hidden;
+    }
+
+    .check-item {
+      display: table;
+      width: 100%;
+    }
+
+    .icon {
+      display: table-cell;
+      font-size: 18px;
+      font-weight: bold;
+      width: 30px;
+      vertical-align: middle;
+    }
+
+    .label {
+      display: table-cell;
+      text-align: left;
+      font-weight: 500;
+      vertical-align: middle;
+    }
+
+    .status {
+      display: table-cell;
+      font-size: 13px;
+      opacity: 0.8;
+      text-align: right;
+      vertical-align: middle;
+    }
+
+    .passed {
+      background-color: #e8f5e9;
+      border-left: 4px solid #4caf50;
+      color: #2e7d32;
+    }
+
+    .passed .icon {
+      color: #4caf50;
+    }
+
+    .failed {
+      background-color: #ffebee;
+      border-left: 4px solid #f44336;
+      color: #c62828;
+    }
+
+    .failed .icon {
+      color: #f44336;
+    }
+
+    .summary {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    .summary-stat {
+      display: inline-block;
+      margin: 0 20px;
+      padding: 20px 30px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      vertical-align: top;
+    }
+
+    .summary-stat .number {
+      display: block;
+      font-size: 36px;
+      font-weight: bold;
+      color: #3F8CBA;
+      margin-bottom: 8px;
+    }
+
+    .summary-stat .text {
+      display: block;
+      font-size: 14px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="compatibility-check">
+    <div class="icon-placeholder">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M11 15h2v2h-2zm0-8h2v6h-2zm1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+      </svg>
+    </div>
+    <h1>Browser Compatibility Checker</h1>
+    <p class="description">Check which modern browser features are supported by your current browser.</p>
+
+    <button id="open-new-tab" style="margin: 20px auto; display: block; padding: 12px 24px; font-size: 16px; background-color: #3F8CBA; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 500;">
+      Open in New Tab (Test Browser Isolation)
+    </button>
+      <div>
+      <iframe
+              src="https://customer-ama66exfn1fajl1o.cloudflarestream.com/5bd1094e9ee930c52e1754ea7ccf6b72/iframe?muted=true&preload=true&loop=true&autoplay=true&poster=https%3A%2F%2Fcustomer-ama66exfn1fajl1o.cloudflarestream.com%2F5bd1094e9ee930c52e1754ea7ccf6b72%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&controls=false"
+              loading="lazy"
+              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+              allowfullscreen="true"
+      ></iframe>
+      </div>
+
+    <div class="all-checks">
+      <h2>Browser Feature Support:</h2>
+      <ul id="checks-list">
+        <!-- Will be populated by JavaScript -->
+      </ul>
+    </div>
+
+    <div class="summary">
+      <div class="summary-stat">
+        <span class="number" id="passed-count">0</span>
+        <span class="text">Features Supported</span>
+      </div>
+      <div class="summary-stat">
+        <span class="number" id="failed-count">0</span>
+        <span class="text">Features Not Supported</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // Feature detection functions using ES5 syntax only
+      function supportsWebGL1() {
+        try {
+          var canvas = document.createElement('canvas');
+          return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function supportsWebGL2() {
+        try {
+          var canvas = document.createElement('canvas');
+          return !!(window.WebGL2RenderingContext && canvas.getContext('webgl2'));
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function supportsWebAudio() {
+        return !!(window.AudioContext || window.webkitAudioContext);
+      }
+
+      function supportsLocalStorage() {
+        try {
+          var test = '__test__';
+          localStorage.setItem(test, test);
+          localStorage.removeItem(test);
+          return true;
+        } catch(e) {
+          return false;
+        }
+      }
+
+      function supportsPromises() {
+        return typeof Promise !== 'undefined';
+      }
+
+      function supportsTransforms() {
+        var el = document.createElement('div');
+        return typeof el.style.transform !== 'undefined' ||
+               typeof el.style.webkitTransform !== 'undefined' ||
+               typeof el.style.mozTransform !== 'undefined';
+      }
+
+      function supportsTransitions() {
+        var el = document.createElement('div');
+        return typeof el.style.transition !== 'undefined' ||
+               typeof el.style.webkitTransition !== 'undefined' ||
+               typeof el.style.mozTransition !== 'undefined';
+      }
+
+      function supportsAnimations() {
+        var el = document.createElement('div');
+        return typeof el.style.animation !== 'undefined' ||
+               typeof el.style.webkitAnimation !== 'undefined' ||
+               typeof el.style.mozAnimation !== 'undefined';
+      }
+
+      function supportsCSSGrid() {
+        if (typeof CSS === 'undefined' || typeof CSS.supports === 'undefined') {
+          return false;
+        }
+        return CSS.supports('display', 'grid');
+      }
+
+      function supportsCSSVariables() {
+        if (typeof CSS === 'undefined' || typeof CSS.supports === 'undefined') {
+          return false;
+        }
+        return CSS.supports('color', 'var(--fake-var)');
+      }
+
+      function supportsFlexbox() {
+        if (typeof CSS === 'undefined' || typeof CSS.supports === 'undefined') {
+          var el = document.createElement('div');
+          return typeof el.style.flex !== 'undefined' ||
+                 typeof el.style.webkitFlex !== 'undefined';
+        }
+        return CSS.supports('display', 'flex');
+      }
+
+      function supportsServiceWorkers() {
+        return 'serviceWorker' in navigator;
+      }
+
+      function supportsES6() {
+        try {
+          eval('"use strict"; const test = () => {}; class Test {}');
+          return true;
+        } catch(e) {
+          return false;
+        }
+      }
+
+      function supportsFetch() {
+        return typeof fetch !== 'undefined';
+      }
+
+      // Cloudflare Stream Video Requirements
+      function supportsWebRTC() {
+        return !!(window.RTCPeerConnection || window.webkitRTCPeerConnection || window.mozRTCPeerConnection);
+      }
+
+      function supportsMediaSource() {
+        return typeof window.MediaSource !== 'undefined' || typeof window.WebKitMediaSource !== 'undefined';
+      }
+
+      function supportsH264Video() {
+        try {
+          var video = document.createElement('video');
+          return !!(video.canPlayType && video.canPlayType('video/mp4; codecs="avc1.42E01E"').replace(/no/, ''));
+        } catch(e) {
+          return false;
+        }
+      }
+
+      function supportsHEVCVideo() {
+        try {
+          var video = document.createElement('video');
+          return !!(video.canPlayType && video.canPlayType('video/mp4; codecs="hev1.1.6.L93.B0"').replace(/no/, ''));
+        } catch(e) {
+          return false;
+        }
+      }
+
+      function supportsVP9Video() {
+        try {
+          var video = document.createElement('video');
+          return !!(video.canPlayType && video.canPlayType('video/webm; codecs="vp9"').replace(/no/, ''));
+        } catch(e) {
+          return false;
+        }
+      }
+
+      function supportsAV1Video() {
+        try {
+          var video = document.createElement('video');
+          return !!(video.canPlayType && video.canPlayType('video/mp4; codecs="av01.0.05M.08"').replace(/no/, ''));
+        } catch(e) {
+          return false;
+        }
+      }
+
+      function supportsFullscreen() {
+        var el = document.createElement('div');
+        return !!(el.requestFullscreen || el.webkitRequestFullscreen ||
+                  el.mozRequestFullScreen || el.msRequestFullscreen);
+      }
+
+      function isInBrowserIsolation() {
+        // Check for common browser isolation indicators
+        try {
+          // Check for Cloudflare Browser Isolation
+          if (window.name && window.name.indexOf('cfBrowserIsolation') !== -1) {
+            return true;
+          }
+
+          // Check for remote browser user agent strings
+          var ua = navigator.userAgent.toLowerCase();
+          if (ua.indexOf('headless') !== -1 ||
+              ua.indexOf('phantom') !== -1 ||
+              ua.indexOf('remote') !== -1) {
+            return true;
+          }
+
+          // Check for WebDriver (automation/isolation indicator)
+          if (navigator.webdriver === true) {
+            return true;
+          }
+
+          // Check for limited navigator properties (isolation often restricts these)
+          if (navigator.plugins.length === 0 && navigator.mimeTypes.length === 0) {
+            return true;
+          }
+
+          return false;
+        } catch(e) {
+          return false;
+        }
+      }
+
+      function supportsIframeEmbedding() {
+        try {
+          // Check if we're already in an iframe
+          if (window.self !== window.top) {
+            // Try to access parent (will fail if cross-origin restrictions)
+            try {
+              var test = window.top.location.href;
+              return true;
+            } catch(e) {
+              // Cross-origin, but iframes work
+              return true;
+            }
+          }
+
+          // Check if iframe sandbox is supported
+          var iframe = document.createElement('iframe');
+          return 'sandbox' in iframe;
+        } catch(e) {
+          return false;
+        }
+      }
+
+      // Define all checks
+      var checks = [
+        { name: 'WebGL 1.0', test: supportsWebGL1 },
+        { name: 'WebGL 2.0', test: supportsWebGL2 },
+        { name: 'Web Audio', test: supportsWebAudio },
+        { name: 'Local Storage', test: supportsLocalStorage },
+        { name: 'Promises', test: supportsPromises },
+        { name: 'CSS Transforms', test: supportsTransforms },
+        { name: 'CSS Transitions', test: supportsTransitions },
+        { name: 'CSS Animations', test: supportsAnimations },
+        { name: 'CSS Grid', test: supportsCSSGrid },
+        { name: 'CSS Variables', test: supportsCSSVariables },
+        { name: 'Flexbox', test: supportsFlexbox },
+        { name: 'Service Workers', test: supportsServiceWorkers },
+        { name: 'ES6 Features', test: supportsES6 },
+        { name: 'Fetch API', test: supportsFetch },
+        { name: 'WebRTC (Required for Adaptive Streaming)', test: supportsWebRTC },
+        { name: 'Media Source Extensions', test: supportsMediaSource },
+        { name: 'H.264 Video Codec', test: supportsH264Video },
+        { name: 'HEVC/H.265 Video Codec', test: supportsHEVCVideo },
+        { name: 'VP9 Video Codec', test: supportsVP9Video },
+        { name: 'AV1 Video Codec', test: supportsAV1Video },
+        { name: 'Fullscreen API', test: supportsFullscreen },
+        { name: 'Iframe Embedding Support', test: supportsIframeEmbedding },
+        { name: 'Not in Browser Isolation', test: function() { return !isInBrowserIsolation(); } }
+      ];
+
+      // Run checks and render results
+      function runChecks() {
+        var checksList = document.getElementById('checks-list');
+        var passedCount = 0;
+        var failedCount = 0;
+
+        for (var i = 0; i < checks.length; i++) {
+          var check = checks[i];
+          var passed = check.test();
+
+          if (passed) {
+            passedCount++;
+          } else {
+            failedCount++;
+          }
+
+          var li = document.createElement('li');
+          li.className = passed ? 'passed' : 'failed';
+
+          var checkItem = document.createElement('div');
+          checkItem.className = 'check-item';
+
+          var icon = document.createElement('span');
+          icon.className = 'icon';
+          icon.innerHTML = passed ? '&#10003;' : '&#10007;';
+
+          var label = document.createElement('span');
+          label.className = 'label';
+          label.textContent = check.name;
+
+          var status = document.createElement('span');
+          status.className = 'status';
+          status.textContent = passed ? 'Supported' : 'Not Supported';
+
+          checkItem.appendChild(icon);
+          checkItem.appendChild(label);
+          checkItem.appendChild(status);
+          li.appendChild(checkItem);
+          checksList.appendChild(li);
+        }
+
+        document.getElementById('passed-count').textContent = passedCount;
+        document.getElementById('failed-count').textContent = failedCount;
+      }
+
+      // Add button click handler
+      function setupButton() {
+        var button = document.getElementById('open-new-tab');
+        if (button) {
+          button.onclick = function() {
+            window.open(window.location.href, '_blank');
+          };
+        }
+      }
+
+      // Run checks when page loads
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          runChecks();
+          setupButton();
+        });
+      } else {
+        runChecks();
+        setupButton();
+      }
+    })();
+  </script>
+</body>
+</html>
